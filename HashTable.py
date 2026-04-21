@@ -25,6 +25,12 @@ def create_table(capacity: int):
         "buckets"  : [[] for c in range(capacity)]
     }
 
+def validate_table(table: dict):
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    if "capacity" not in table or "size" not in table or "buckets" not in table:
+        raise ValueError("Invalid table structure :)")
 
 # Hash function
 def hash_fun(key: object, capacity: int):
@@ -49,11 +55,8 @@ def hash_fun(key: object, capacity: int):
 
 def insert(table: dict, key: object, value: object):
 
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
+    validate_table(table)
     
-    if "capacity" not in table or "size" not in table or "buckets" not in table:
-        raise ValueError("Invalid table structure :)")
     
     index = hash_fun(key, table.get("Capacity"))
     bucket = (table.get("buckets"))[index]
@@ -75,12 +78,8 @@ def insert(table: dict, key: object, value: object):
 
 def get(table: dict, key: object):
 
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
-    
-    if "capacity" not in table or "size" not in table or "buckets" not in table:
-        raise ValueError("Invalid table structure :)")
-    
+    validate_table(table)
+
     index = hash_fun(key, table.get("Capacity"))
     bucket = (table.get("buckets"))[index]
 
@@ -89,15 +88,39 @@ def get(table: dict, key: object):
             return pair[i]
         
     raise KeyError("Game Over! Key not found in the table :)")
+
+
+def check(table: dict, key: object):
+
+    validate_table(table)
     
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = (table.get("buckets"))[index]
+
+    for i, pair in bucket:
+        if pair[i] == key:
+            return True
+        
+    return False
+
+
+def size(table: dict):
+
+    validate_table(table)
+    return table.get("Size")
+
+
+def is_empty(table: dict):
+
+    validate_table(table)
+    return table.get("Size") == 0
+
 
 def delete(table: dict, key: object):
 
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
-    
-    if "capacity" not in table or "size" not in table or "buckets" not in table:
-        raise ValueError("Invalid table structure :)")
+    validate_table(table)
+    if is_empty(table):
+        raise ValueError("The table is empty, nothing to delete :)")
     
     index = hash_fun(key, table.get("Capacity"))
     bucket = (table.get("buckets"))[index]
@@ -110,30 +133,46 @@ def delete(table: dict, key: object):
         
     raise KeyError("Now, key not found in the table :)")
 
-def check(table: dict, key: object):
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
-    
-    if "capacity" not in table or "size" not in table or "buckets" not in table:
-        raise ValueError("Invalid table structure :)")
-    
-    index = hash_fun(key, table.get("Capacity"))
-    bucket = (table.get("buckets"))[index]
 
-    for i, pair in bucket:
-        if pair[i] == key:
-            return True
+
+"""
+Usage Section:
+Choose any positive number as a capacity, 
+then create the table and insert any key-value pair you like :)
+
+    table = create_table(5)         
+    insert(table, 1, "Ahmad")
+    insert(table, 2, "Osaid")
+    insert(table, 2, "Mohammad")
+
         
-    return False
+Use any function you want to test the table, for example:
 
-def size(table: dict):
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
+    get(table, 1)     | "Ahmad"
+    get(table, 2)     | "Osaid" or "Mohammad" 
+    check(table, 1)   | True    
+    check(table, 3)   | False
+    delete(table, 1)  | remove Ahmad from the table
+    size(table)       | 2
+    is_empty(table)   | False
+
         
-    return table.get("Size")
+Time Complexity:
 
-def is_empty(table: dict):
-    if table is not dict:
-        raise TypeError("Invalid table type. It must be a dictionary :)")
-    
-    return table.get("Size") == 0
+    create_table   : O(1)
+    validate_table : O(1)  
+    hash_fun       : O(k) when k is the len(key string) 
+    insert         : O(1)
+    get            : O(1)
+    delete         : O(1) 
+    check          : O(1) on average
+    size           : O(1)
+    is_empty       : O(1)
+
+   insert, get, delete and check fun.s: O(n) in the worst case.
+   --> when all keys hash to the same index :)
+
+"""
+
+
+# Test
