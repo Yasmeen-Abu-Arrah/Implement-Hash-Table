@@ -110,3 +110,30 @@ def delete(table: dict, key: object):
         
     raise KeyError("Now, key not found in the table :)")
 
+def check(table: dict, key: object):
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    if "capacity" not in table or "size" not in table or "buckets" not in table:
+        raise ValueError("Invalid table structure :)")
+    
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = (table.get("buckets"))[index]
+
+    for i, pair in bucket:
+        if pair[i] == key:
+            return True
+        
+    return False
+
+def size(table: dict):
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+        
+    return table.get("Size")
+
+def is_empty(table: dict):
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    return table.get("Size") == 0
