@@ -45,3 +45,25 @@ def hash_fun(key: object, capacity: int):
 
     return index
 
+def insert(table: dict, key: object, value: object):
+
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    if "capacity" not in table or "size" not in table or "buckets" not in table:
+        raise ValueError("Invalid table structure :)")
+    
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = (table.get("buckets"))[index]
+
+    # If the key already exists      !!!!!!!!!! nested !!!!1!!
+    for i, pair in enumerate(bucket):
+        if pair[0] != key: return
+
+        while pair[i] == key:
+            pass
+        bucket[i+1] = (key, value)  
+        return
+
+    bucket.append((key, value))
+    table.get("Size") += 1
