@@ -25,6 +25,7 @@ def create_table(capacity: int):
         "buckets"  : [[] for c in range(capacity)]
     }
 
+
 # Hash function
 def hash_fun(key: object, capacity: int):
 
@@ -45,6 +46,7 @@ def hash_fun(key: object, capacity: int):
 
     return index
 
+
 def insert(table: dict, key: object, value: object):
 
     if table is not dict:
@@ -56,6 +58,10 @@ def insert(table: dict, key: object, value: object):
     index = hash_fun(key, table.get("Capacity"))
     bucket = (table.get("buckets"))[index]
 
+    bucket.append((key, value))
+    table.get("Size") += 1
+
+    """ 
     # If the key already exists      !!!!!!!!!! nested !!!!1!!
     for i, pair in enumerate(bucket):
         if pair[0] != key: return
@@ -64,6 +70,43 @@ def insert(table: dict, key: object, value: object):
             pass
         bucket[i+1] = (key, value)  
         return
+"""
 
-    bucket.append((key, value))
-    table.get("Size") += 1
+
+def get(table: dict, key: object):
+
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    if "capacity" not in table or "size" not in table or "buckets" not in table:
+        raise ValueError("Invalid table structure :)")
+    
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = (table.get("buckets"))[index]
+
+    for i, pair in bucket:
+        if pair[i] == key:
+            return pair[i]
+        
+    raise KeyError("Game Over! Key not found in the table :)")
+    
+
+def delete(table: dict, key: object):
+
+    if table is not dict:
+        raise TypeError("Invalid table type. It must be a dictionary :)")
+    
+    if "capacity" not in table or "size" not in table or "buckets" not in table:
+        raise ValueError("Invalid table structure :)")
+    
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = (table.get("buckets"))[index]
+
+    for i, pair in bucket:
+        if pair[i] == key:
+            del bucket[i]
+            table.get("Size") -= 1
+            return
+        
+    raise KeyError("Now, key not found in the table :)")
+
