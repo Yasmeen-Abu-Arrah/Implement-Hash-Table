@@ -11,15 +11,26 @@
 
 # Create the main table "Hash Table" 
 def create_table(capacity: int):
-    #uncomplete
+
+    if capacity is not int:
+        raise TypeError("Capacity must be an integer number :)")
+    if capacity < 0:
+        raise ValueError("Capacity must be a positive number :)")
+    if capacity == 0:
+        raise ValueError("Capacity must be a number with a value :) ")
+    
     return {
         "Capacity" : capacity,
         "Size"     : 0,
+        "buckets"  : [[] for c in range(capacity)]
     }
 
 # Hash function
 def hash_fun(key: object, capacity: int):
 
+    if key is not int and key is not str:
+        raise TypeError("Key must be an integer, char or string :)")
+   
     if key is int:
         index = key % capacity 
 
@@ -33,3 +44,4 @@ def hash_fun(key: object, capacity: int):
         index = total % capacity                
 
     return index
+
