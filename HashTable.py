@@ -1,13 +1,8 @@
-# Name                  : Yasmeen Abu Arrah
-# Student ID            : 202211471
-# Date                  : 21 Apr. 2026
-# Chosen Data Structure : Hash Table :)
+# Name                   : Yasmeen Abu Arrah
+# Student ID             : 202211471
+# Date                   : 21 Apr. 2026
+# Chosen Data Structure  : Hash Table :)
 
-# Attempt #1
-# Hash Table --> hash function, index, array and maybe singly linked list
-# hash fun. --> capacity and key (%)
-# collision --> chaining method --> list :)
-# fun.s : create table/ hash/ insert/ get/ delete/ find(t/f)/ size/ ?
 
 # Create the main table "Hash Table" 
 def create_table(capacity: int):
@@ -25,14 +20,15 @@ def create_table(capacity: int):
         "buckets"  : [[] for c in range(capacity)]
     }
 
+
+# Validate the table type
 def validate_table(table: dict):
+
     if table != dict(table):
         raise TypeError("Invalid table type. It must be a dictionary :)")
-    
-    #if "capacity" not in table or "size" not in table or "buckets" not in table:
-        raise ValueError("Invalid table structure :)")
 
-# Hash function
+
+# Hash function to calculate the index for a given key
 def hash_fun(key, capacity: int):
 
     if key is not int(key) and key is not str(key) and key:
@@ -53,6 +49,7 @@ def hash_fun(key, capacity: int):
     return index
 
 
+# Insert a key-value pair into the table || as a dict :)
 def insert(table: dict, key, value):
 
     validate_table(table)
@@ -66,30 +63,24 @@ def insert(table: dict, key, value):
     table["Size"] = 1 + table.get("Size")
 
 
+# Get the value associated with a key in the table
 def get(table: dict, key):
 
     validate_table(table)
-
     index = hash_fun(key, table.get("Capacity"))
     bucket = table["buckets"][index]
 
-    
     for i in bucket:
         if key in i:
             return i[key]
     
     raise ValueError("Game Over! Key not found in the table :)")
-    
-    #if key in bucket:
-        #return bucket
-   # elif key not in bucket:
-        #raise ValueError("Game Over! Key not found in the table :)")
 
 
+# Check if a key exists in the table
 def check(table: dict, key):
 
     validate_table(table)
-
     index = hash_fun(key, table.get("Capacity"))
     bucket = table["buckets"][index]
 
@@ -100,18 +91,21 @@ def check(table: dict, key):
     return False
 
 
+# Get the size of the table (number of key-value pairs)
 def size(table: dict):
 
     validate_table(table)
     return table.get("Size")
 
 
+# Check if the table is empty (size is 0)
 def is_empty(table: dict):
 
     validate_table(table)
     return table.get("Size") == 0
 
 
+# Delete a key-value pair from the table
 def delete(table: dict, key):
 
     validate_table(table)
@@ -126,9 +120,6 @@ def delete(table: dict, key):
             del i[key]
             table["Size"] = table.get("Size") - 1
             return "Now, key not found in the table :)"
-
-        
-
 
 
 
@@ -177,18 +168,63 @@ Time Complexity:
 # Test
 if __name__ == "__main__":
 
-    print("Hello Mr.Hussien | welcome to the Hash Table :)")
-    print("Test #1: create & get | number key")
+    print("\nHello Mr.Hussien | welcome to the Hash Table :)")
+    print("\n\nTest #1: Normal usage | happy path ")
     table = create_table(4)         
     insert(table, 1, "Ahmad")
     insert(table, 2, "Osaid")
     insert(table, 6, "Mohammad")
-
     print(table)  
-    print(get(table, 1))  
-    print(get(table, 2))     
-    print(check(table, 1))    
-    print(check(table, 3))   
-    print(delete(table, 1))       
-    print(size(table))      
-    print(is_empty(table))  
+    print("Size of the table:", size(table))    
+    print("The value of key 1 is:", get(table, 1))  
+    print("The value of key 2 is:", get(table, 2))     
+    print("Is the key 1 exists in the table?", check(table, 1))    
+    print("Is the key 3 exists in the table?", check(table, 3))   
+    print("Deleted key 1:", delete(table, 1))       
+    print("Size of the table now:", size(table))      
+    print("Is the table empty?", is_empty(table))  
+
+    print("\n\nTest #2: Edge cases | empty table")
+    empty_table = create_table(2)
+    print("Is the table empty?", is_empty(empty_table))   
+    print("Size of the table:", size(empty_table))
+
+    print("\n\nTest #3 : Error validation | try/except blocks")
+    try:
+        insert(table, 2, "Mohammad") 
+    except KeyError as e:
+        print(e)
+
+    try:
+        get(table, 5)
+    except ValueError as e:
+        print(e)
+
+    try:
+        delete(empty_table, 1)
+    except ValueError as e:
+        print(e)    
+    
+    try:
+        create_table(-1)
+    except ValueError as e:
+        print(e)
+    
+    try:
+        create_table(0)
+    except ValueError as e:
+        print(e)
+
+    try:
+        create_table(3.5)
+    except TypeError as e:
+        print(e)
+
+    try:
+        insert(table, 3.5, "Invalid Key")   
+    except TypeError as e:
+        print(e)
+
+
+    
+
