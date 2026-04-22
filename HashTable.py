@@ -171,8 +171,8 @@ Time Complexity:
 # Test
 if __name__ == "__main__":
 
-    print("\nHello Mr.Hussien | welcome to the Hash Table :)")
-    print("\n\nTest #1: Normal usage | happy path ")
+    print("\n\nHello Mr.Hussien | welcome to the Hash Table :)")
+    print("\nTest #1: Normal usage | happy path ")
     table = create_table(4)         
     insert(table, 1, "Ahmad")
     insert(table, 2, "Osaid")
@@ -187,12 +187,12 @@ if __name__ == "__main__":
     print("Size of the table now:", size(table))      
     print("Is the table empty?", is_empty(table))  
 
-    print("\n\nTest #2: Edge cases | empty table")
+    print("\nTest #2: Edge cases | empty table")
     empty_table = create_table(2)
     print("Is the table empty?", is_empty(empty_table))   
     print("Size of the table:", size(empty_table))
 
-    print("\n\nTest #3 : Error validation | try/except blocks")
+    print("\nTest #3 : Error validation | try/except blocks")
     try:
         insert(table, 2, "Mohammad") 
     except KeyError as e:
@@ -228,6 +228,17 @@ if __name__ == "__main__":
     except TypeError as e:
         print(e)
 
+    print("\nTest #4 : Colliction demonstrain | same index for different keys")
+    table2 = create_table(3)
+    insert(table2, "a", "First")
+    insert(table2, "d", "Second")
+    insert(table2, "n", "Third")
+    print(table2["Buckets"])
+    print("The value of key 'a' is:", get(table2, "a"))
+    print("The value of key 'd' is:", get(table2, "d")) 
+    print("The value of key 'n' is:", get(table2, "n"))
+
+    print("\nThank You! I hope the work is clear and meets your expectations :)\n")
 
     
 
