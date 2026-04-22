@@ -29,19 +29,19 @@ def validate_table(table: dict):
     if table != dict(table):
         raise TypeError("Invalid table type. It must be a dictionary :)")
     
-    # if "capacity" not in table or "size" not in table or "buckets" not in table:
+    #if "capacity" not in table or "size" not in table or "buckets" not in table:
         raise ValueError("Invalid table structure :)")
 
 # Hash function
 def hash_fun(key, capacity: int):
 
-    if key is not int and key is not str:
+    if key is not int(key) and key is not str(key) and key:
         raise TypeError("Key must be an integer, char or string :)")
-   
-    if key is int:
+    
+    if key is int(key):
         index = key % capacity 
 
-    if key is str:
+    if key is str(key):
         total = 0
         for char in key:
             if 65 <= ord(char) <= 90:
@@ -59,10 +59,10 @@ def insert(table: dict, key, value):
     if check(table, key): 
         raise KeyError("Key already exists in the table :)")  
     
-    index = hash_fun(key, table.get("Capacity"))
-    bucket = (table.get("buckets"))[index]
+    index = hash_fun(key, table["Capacity"])
+    bucket = table["buckets"][index]
 
-    bucket.append((key, value))
+    bucket.append({key: value})
     table["Size"] = 1 + table.get("Size")
 
 
@@ -71,21 +71,30 @@ def get(table: dict, key):
     validate_table(table)
 
     index = hash_fun(key, table.get("Capacity"))
-    bucket = (table.get("buckets"))[index]
+    bucket = table["buckets"][index]
 
-    for i, pair in bucket:
-        if pair[i] == key:
-            return pair[i]
-        
-    raise KeyError("Game Over! Key not found in the table :)")
+    
+    for i in bucket:
+        if key in i:
+            return i[key]
+    
+    raise ValueError("Game Over! Key not found in the table :)")
+    
+    #if key in bucket:
+        #return bucket
+   # elif key not in bucket:
+        #raise ValueError("Game Over! Key not found in the table :)")
 
 
 def check(table: dict, key):
 
     validate_table(table)
-    
-    for i in table.get("buckets"):
-        if i == key:
+
+    index = hash_fun(key, table.get("Capacity"))
+    bucket = table["buckets"][index]
+
+    for i in bucket:
+        if key in i:
             return True
         
     return False
@@ -112,13 +121,14 @@ def delete(table: dict, key):
     index = hash_fun(key, table.get("Capacity"))
     bucket = (table.get("buckets"))[index]
 
-    for i, pair in bucket:
-        if pair[i] == key:
-            del bucket[i]
+    for i in bucket:
+        if key in i:
+            del i[key]
             table["Size"] = table.get("Size") - 1
-            return
+            return "Now, key not found in the table :)"
+
         
-    raise KeyError("Now, key not found in the table :)")
+
 
 
 
@@ -174,10 +184,11 @@ if __name__ == "__main__":
     insert(table, 2, "Osaid")
     insert(table, 6, "Mohammad")
 
-    print(get(table, 1))     # Ahmad
-    print(get(table, 2))     # Osaid or Mohammad 
-    print(check(table, 1))   # True    
-    print(check(table, 3))   # False
-    delete(table, 1)        # remove Ahmad from the table
-    print(size(table))      # 2
-    print(is_empty(table))  # False
+    print(table)  
+    print(get(table, 1))  
+    print(get(table, 2))     
+    print(check(table, 1))    
+    print(check(table, 3))   
+    print(delete(table, 1))       
+    print(size(table))      
+    print(is_empty(table))  
