@@ -7,7 +7,7 @@
 # Create the main table "Hash Table" 
 def create_table(capacity: int):
 
-    if capacity != int(capacity):
+    if not isinstance(capacity, int):
         raise TypeError("Capacity must be an integer number :)")
     if capacity < 0:
         raise ValueError("Capacity must be a positive number :)")
@@ -24,20 +24,20 @@ def create_table(capacity: int):
 # Validate the table type
 def validate_table(table: dict):
 
-    if table != dict(table):
+    if not isinstance(table, dict):
         raise TypeError("Invalid table type. It must be a dictionary :)")
 
 
 # Hash function to calculate the index for a given key
 def hash_fun(key, capacity: int):
 
-    if key is not int(key) and key is not str(key) and key:
+    if not isinstance(key, (int, str)):
         raise TypeError("Key must be an integer, char or string :)")
     
-    if key is int(key):
+    if isinstance(key, int):
         index = key % capacity 
 
-    if key is str(key):
+    if isinstance(key, str):
         total = 0
         for char in key:
             if 65 <= ord(char) <= 90:
