@@ -125,7 +125,7 @@ def delete(table: dict, key):
             return "Now, key not found in the table :)"
 
 
-# Def update(table: dict, key, value):
+# Update the value of an existing key in the table:
 def update(table: dict, key, value):
 
     validate_table(table)
@@ -140,7 +140,19 @@ def update(table: dict, key, value):
             i[key] = value
             return "Key updated successfully :)"
         
-        
+
+# Return all keys in the table:
+def keys(table: dict):
+
+    validate_table(table)
+    all_keys = []
+    for bucket in table["Buckets"]:
+        for pair in bucket:
+            all_keys.extend(pair.keys())
+    
+    return all_keys 
+
+
 
 
 """
@@ -255,7 +267,7 @@ if __name__ == "__main__":
     print("The value of key 'd' is:", get(table2, "d")) 
     print("The value of key 'n' is:", get(table2, "n"))
 
-    print("\nTest #5 : Additional function | update")
+    print("\nTest #5 : Additional function | update | return keys")
     print("Before update:", get(table, 2))  
     print(update(table, 2, "Updated Osaid "))
     print("After update:", get(table, 2))
@@ -264,6 +276,8 @@ if __name__ == "__main__":
         update(table, 3, "not working!")   
     except KeyError as e:
         print(e)
+
+    print("All keys in the table:", keys(table))
 
 
 
