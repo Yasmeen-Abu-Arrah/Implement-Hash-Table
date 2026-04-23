@@ -190,7 +190,7 @@ Use any function you want to test the table, for example:
         
 Time Complexity:
 
-    create_table   : O(1)
+    create_table   : O(n)
     validate_table : O(1)  
     hash_fun       : O(k) when k is the len(key string) 
     insert         : O(1)
@@ -199,6 +199,9 @@ Time Complexity:
     check          : O(1) on average
     size           : O(1)
     is_empty       : O(1)
+    update         : O(1) 
+    keys           : O(n) 
+    clear          : O(n) 
 
    insert, get, delete and check fun.s: O(n) in the worst case.
    --> when all keys hash to the same index :)
