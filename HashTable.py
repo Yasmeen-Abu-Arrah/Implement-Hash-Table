@@ -7,6 +7,8 @@
 # Create the main table "Hash Table" 
 def create_table(capacity: int):
 
+    if isinstance(capacity, bool):       
+        raise TypeError("Capacity must be an integer, not a boolean :)")
     if not isinstance(capacity, int):
         raise TypeError("Capacity must be an integer number :)")
     if capacity < 0:
@@ -114,6 +116,8 @@ def delete(table: dict, key):
     validate_table(table)
     if is_empty(table):
         raise ValueError("The table is empty, nothing to delete :)")
+    if not check(table, key):                     
+        raise KeyError("Key not found in the table :)")
     
     index = hash_fun(key, table["Capacity"])
     bucket = table["Buckets"][index]
@@ -153,7 +157,12 @@ def keys(table: dict):
     return all_keys 
 
 
+# Clear the table
+def clear(table: dict):
 
+    validate_table(table)
+    table["Buckets"] = [[] for c in range(table["Capacity"])]
+    table["Size"] = 0
 
 """
 Usage Section:
@@ -253,8 +262,18 @@ if __name__ == "__main__":
         print(e)
 
     try:
+        create_table(True)
+    except TypeError as e:
+        print(e)
+
+    try:
         insert(table, 3.5, "Invalid Key")   
     except TypeError as e:
+        print(e)
+
+    try:
+        delete(table, 8)
+    except KeyError as e:  
         print(e)
 
     print("\nTest #4 : Colliction demonstrain | same index for different keys")
@@ -267,7 +286,7 @@ if __name__ == "__main__":
     print("The value of key 'd' is:", get(table2, "d")) 
     print("The value of key 'n' is:", get(table2, "n"))
 
-    print("\nTest #5 : Additional function | update | return keys")
+    print("\nTest #5 : Additional function | update | return keys | clear")
     print("Before update:", get(table, 2))  
     print(update(table, 2, "Updated Osaid "))
     print("After update:", get(table, 2))
@@ -279,6 +298,8 @@ if __name__ == "__main__":
 
     print("All keys in the table:", keys(table))
 
+    clear(table)
+    print("Table after clearing:\n",table)
 
 
     print("\nThank You! I hope the work is clear and meets your expectations :)\n")
