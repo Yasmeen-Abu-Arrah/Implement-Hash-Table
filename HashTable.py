@@ -2,7 +2,12 @@
 # Student ID             : 202211471
 # Date                   : 21 Apr. 2026
 # Chosen Data Structure  : Hash Table :)
+# Demo Link              : https://yasmeen-abu-arrah.github.io/Implement-Hash-Table/
+# Repository Link        : https://github.com/Yasmeen-Abu-Arrah/Implement-Hash-Table.git
 
+# Note: HTML page just for demo and presentation purposes, it contains the same code as this file.
+# Its AI generated == I didn't put any effort into creating it.
+# Unlike the Python code I wrote myself :)
 
 # Create the main table "Hash Table" 
 def create_table(capacity: int):
