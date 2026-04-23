@@ -125,6 +125,23 @@ def delete(table: dict, key):
             return "Now, key not found in the table :)"
 
 
+# Def update(table: dict, key, value):
+def update(table: dict, key, value):
+
+    validate_table(table)
+    index = hash_fun(key, table["Capacity"])
+    bucket = table["Buckets"][index]
+
+    if check(table, key) == False:
+        raise KeyError("Key not found in the table :)")
+     
+    for i in bucket:
+        if key in i:
+            i[key] = value
+            return "Key updated successfully :)"
+        
+        
+
 
 """
 Usage Section:
@@ -237,6 +254,18 @@ if __name__ == "__main__":
     print("The value of key 'a' is:", get(table2, "a"))
     print("The value of key 'd' is:", get(table2, "d")) 
     print("The value of key 'n' is:", get(table2, "n"))
+
+    print("\nTest #5 : Additional function | update")
+    print("Before update:", get(table, 2))  
+    print(update(table, 2, "Updated Osaid "))
+    print("After update:", get(table, 2))
+
+    try:
+        update(table, 3, "not working!")   
+    except KeyError as e:
+        print(e)
+
+
 
     print("\nThank You! I hope the work is clear and meets your expectations :)\n")
 
